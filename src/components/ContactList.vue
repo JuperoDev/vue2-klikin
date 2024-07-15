@@ -7,7 +7,10 @@
       autofocus
     >
 
-    <dialog-button @open-dialog="showDialog = true" @add-contact="addContact" />
+    <dialog-button
+      @open-dialog="showDialog = true"
+      @add-contact="addContact"
+    />
 
     <ul class="contacts">
       <li
@@ -36,25 +39,6 @@
         </ul>
       </li>
     </ul>
-
-    <div
-      v-if="showDialog"
-      class="dialog-overlay"
-      @click="showDialog = false"
-    >
-      <div
-        class="dialog"
-        @click.stop
-      >
-        <p>Hello World</p>
-        <button
-          class="close-button"
-          @click="showDialog = false"
-        >
-          Close
-        </button>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -78,13 +62,6 @@ export default {
       showDialog: false
     };
   },
-  methods: {
-    addContact(newContact) {
-      this.contacts.push(newContact);
-      // todo: vuex
-    }
-  }
-,
   computed: {
     filteredContacts() {
       const query = this.searchQuery.toLowerCase();
@@ -96,6 +73,12 @@ export default {
           contact.phoneNumber.some(phone => phone.includes(query))
         )
         .sort((a, b) => a.lastname.localeCompare(b.lastname));
+    }
+  },
+  methods: {
+    addContact(newContact) {
+      this.contacts.push(newContact);
+      // todo: vuex
     }
   }
 };
@@ -158,39 +141,5 @@ export default {
 .label {
   font-weight: bold;
   margin-right: 5px;
-}
-
-.dialog-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.dialog {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.close-button {
-  margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.close-button:hover {
-  background-color: #0056b3;
 }
 </style>

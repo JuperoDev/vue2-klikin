@@ -7,29 +7,64 @@
       Add New Contact
     </button>
 
-    <div v-if="showDialog" class="dialog-overlay" @click="closeDialog">
-      <div class="dialog" @click.stop>
+    <div
+      v-if="showDialog"
+      class="dialog-overlay"
+      @click="closeDialog"
+    >
+      <div
+        class="dialog"
+        @click.stop
+      >
         <h2>Add New Contact</h2>
         <form @submit.prevent="saveContact">
           <div class="form-group">
             <label for="firstname">First Name:</label>
-            <input v-model="newContact.firstname" id="firstname" required>
+            <input
+              id="firstname"
+              v-model="newContact.firstname"
+              required
+            >
           </div>
           <div class="form-group">
             <label for="lastname">Last Name:</label>
-            <input v-model="newContact.lastname" id="lastname" required>
+            <input
+              id="lastname"
+              v-model="newContact.lastname"
+              required
+            >
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input v-model="newContact.email" id="email" type="email" required>
+            <input
+              id="email"
+              v-model="newContact.email"
+              type="email"
+              required
+            >
           </div>
           <div class="form-group">
             <label for="phone">Phone Number:</label>
-            <input v-model="newContact.phoneNumber" id="phone" required>
+            <input
+              id="phone"
+              v-model="newContact.phoneNumber"
+              required
+            >
           </div>
           <div class="button-group">
-            <button type="submit" class="save-button">Save</button>
-            <button type="button" class="cancel-button" @click="closeDialog">Cancel</button>
+            <button
+              type="submit"
+              class="save-button"
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              class="cancel-button"
+              @click="closeDialog"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </div>
@@ -87,20 +122,33 @@ export default {
 
 <style scoped>
 .contact-list__dialog-button {
-    margin-bottom: 20px;
-    padding: 10px 15px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
 
-  .contact-list__dialog-button:hover {
-    background-color: #218838;
-  }
+.contact-list__dialog-button:hover {
+  background-color: #218838;
+}
+
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
 .dialog {
   background-color: white;
@@ -108,6 +156,7 @@ export default {
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 300px;
+  z-index: 1001;
 }
 
 .form-group {
