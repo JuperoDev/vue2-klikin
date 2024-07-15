@@ -12,5 +12,61 @@
     "email": ["antonio.lorenzo@klikin.com"],
     "firstname": "Antonio",
     "lastname": "Lorenzo"
+  },
+  {
+    "id": 3,
+    "phoneNumber": ["675234567"],
+    "email": ["beatriz.martinez@klikin.com"],
+    "firstname": "Beatriz",
+    "lastname": "Martinez"
+  },
+  {
+    "id": 4,
+    "phoneNumber": ["687345678"],
+    "email": ["carlos.garcia@klikin.com"],
+    "firstname": "Carlos",
+    "lastname": "Garcia"
+  },
+  {
+    "id": 5,
+    "phoneNumber": ["699456789"],
+    "email": ["daniela.lopez@klikin.com"],
+    "firstname": "Daniela",
+    "lastname": "Lopez"
+  },
+  {
+    "id": 6,
+    "phoneNumber": ["611567890"],
+    "email": ["eduardo.fernandez@klikin.com"],
+    "firstname": "Eduardo",
+    "lastname": "Fernandez"
+  },
+  {
+    "id": 7,
+    "phoneNumber": ["622678901"],
+    "email": ["fatima.rodriguez@klikin.com"],
+    "firstname": "Fatima",
+    "lastname": "Rodriguez"
+  },
+  {
+    "id": 8,
+    "phoneNumber": ["633789012"],
+    "email": ["gonzalo.sanchez@klikin.com"],
+    "firstname": "Gonzalo",
+    "lastname": "Sanchez"
+  },
+  {
+    "id": 9,
+    "phoneNumber": ["644890123"],
+    "email": ["hugo.martin@klikin.com"],
+    "firstname": "Hugo",
+    "lastname": "Martin"
+  },
+  {
+    "id": 10,
+    "phoneNumber": ["655901234"],
+    "email": ["isabel.gomez@klikin.com"],
+    "firstname": "Isabel",
+    "lastname": "Gomez"
   }
 ]
