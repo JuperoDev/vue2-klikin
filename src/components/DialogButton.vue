@@ -48,29 +48,16 @@
             >
           </div>
           <div class="contact-list__form-group">
-            <label
-              for="email"
-              class="contact-list__label"
-            >Email:</label>
-            <input
-              id="email"
-              v-model="newContact.email"
+            <FieldAccumulator
               type="email"
-              class="contact-list__input"
-              required
-            >
+              :values="newContact.email"
+            />
           </div>
           <div class="contact-list__form-group">
-            <label
-              for="phone"
-              class="contact-list__label"
-            >Phone Number:</label>
-            <input
-              id="phone"
-              v-model="newContact.phoneNumber"
-              class="contact-list__input"
-              required
-            >
+            <FieldAccumulator
+              type="phone"
+              :values="newContact.phoneNumber"
+            />
           </div>
           <div class="contact-list__button-group">
             <button
@@ -94,8 +81,13 @@
 </template>
 
 <script>
+import FieldAccumulator from './FieldAccumulator.vue';
+
 export default {
   name: 'DialogButton',
+  components: {
+    FieldAccumulator
+  },
   props: {
     contacts: {
       type: Array,
@@ -108,8 +100,8 @@ export default {
       newContact: {
         firstname: '',
         lastname: '',
-        email: '',
-        phoneNumber: ''
+        email: ['new email'],
+        phoneNumber: ['']
       }
     };
   },
@@ -125,16 +117,14 @@ export default {
       this.newContact = {
         firstname: '',
         lastname: '',
-        email: '',
-        phoneNumber: ''
+        email: ['new email'],
+        phoneNumber: ['']
       };
     },
     saveContact() {
       const contact = {
         ...this.newContact,
-        id: this.generateId(),
-        email: [this.newContact.email],
-        phoneNumber: [this.newContact.phoneNumber]
+        id: this.generateId()
       };
       this.$emit('add-contact', contact);
       this.closeDialog();
