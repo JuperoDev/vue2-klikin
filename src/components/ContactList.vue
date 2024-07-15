@@ -7,7 +7,7 @@
       autofocus
     >
 
-    <dialog-button @open-dialog="showDialog = true" />
+    <dialog-button @open-dialog="showDialog = true" @add-contact="addContact" />
 
     <ul class="contacts">
       <li
@@ -78,6 +78,13 @@ export default {
       showDialog: false
     };
   },
+  methods: {
+    addContact(newContact) {
+      this.contacts.push(newContact);
+      // todo: vuex
+    }
+  }
+,
   computed: {
     filteredContacts() {
       const query = this.searchQuery.toLowerCase();
