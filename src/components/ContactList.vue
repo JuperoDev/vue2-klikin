@@ -7,7 +7,7 @@
       autofocus
     >
 
-    <dialog-button @open-dialog="showDialog = true"></dialog-button>
+    <dialog-button @open-dialog="showDialog = true" />
 
     <ul class="contacts">
       <li
@@ -37,10 +37,22 @@
       </li>
     </ul>
 
-    <div v-if="showDialog" class="dialog-overlay" @click="showDialog = false">
-      <div class="dialog" @click.stop>
+    <div
+      v-if="showDialog"
+      class="dialog-overlay"
+      @click="showDialog = false"
+    >
+      <div
+        class="dialog"
+        @click.stop
+      >
         <p>Hello World</p>
-        <button @click="showDialog = false" class="close-button">Close</button>
+        <button
+          class="close-button"
+          @click="showDialog = false"
+        >
+          Close
+        </button>
       </div>
     </div>
   </div>
@@ -83,7 +95,63 @@ export default {
 </script>
 
 <style scoped>
-/* ... (previous styles remain unchanged) ... */
+
+.contact-list {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.contacts {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-item {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s ease;
+}
+
+.contact-item:hover {
+  background-color: #f1f1f1;
+}
+
+.contact-name {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.contact-details {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-detail {
+  padding: 5px 0;
+  font-size: 14px;
+}
+
+.label {
+  font-weight: bold;
+  margin-right: 5px;
+}
 
 .dialog-overlay {
   position: fixed;

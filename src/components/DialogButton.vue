@@ -1,15 +1,20 @@
 <template>
-    <button @click="$emit('open-dialog')" class="dialog-button">Open Dialog</button>
-  </template>
-  
+  <button
+    class="contact-list__dialog-button"
+    @click="$emit('open-dialog')"
+  >
+    Open Dialog
+  </button>
+</template>
+    
   <script>
   export default {
     name: 'DialogButton'
   }
   </script>
-  
+    
   <style scoped>
-  .dialog-button {
+  .contact-list__dialog-button {
     margin-bottom: 20px;
     padding: 10px 15px;
     background-color: #28a745;
@@ -21,7 +26,8 @@
     transition: background-color 0.3s ease;
   }
   
-  .dialog-button:hover {
+  .contact-list__dialog-button:hover {
     background-color: #218838;
   }
   </style>
+  
