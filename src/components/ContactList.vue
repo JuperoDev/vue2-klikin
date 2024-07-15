@@ -3,40 +3,42 @@
     <input
       v-model="searchQuery"
       placeholder="Search contacts"
-      class="search-input"
+      class="contact-list__search-input"
       autofocus
     >
 
     <dialog-button
+      :contacts="contacts"
       @open-dialog="showDialog = true"
       @add-contact="addContact"
     />
 
-    <ul class="contacts">
+    <ul class="contact-list__contacts">
       <li
         v-for="contact in filteredContacts"
         :key="contact.id"
-        class="contact-item"
+        class="contact-list__contact-item"
       >
-        <div class="contact-name">
+        <div class="contact-list__contact-name">
           {{ contact.firstname }} {{ contact.lastname }}
         </div>
-        <ul class="contact-details">
+        <ul class="contact-list__contact-details">
           <li
             v-for="(phone, index) in contact.phoneNumber"
             :key="'phone'+index"
-            class="contact-detail"
+            class="contact-list__contact-detail"
           >
-            <span class="label">Phone:</span> {{ phone }}
+            <span class="contact-list__label">Phone:</span> {{ phone }}
           </li>
           <li
             v-for="(email, index) in contact.email"
             :key="'email'+index"
-            class="contact-detail"
+            class="contact-list__contact-detail"
           >
-            <span class="label">Email:</span> {{ email }}
+            <span class="contact-list__label">Email:</span> {{ email }}
           </li>
         </ul>
+        <!-- <div class="contact-list__contact-id">ID: {{ contact.id }}</div> this is just to show we have generated the id -->
       </li>
     </ul>
   </div>
@@ -85,7 +87,6 @@ export default {
 </script>
 
 <style scoped>
-
 .contact-list {
   padding: 20px;
   background-color: #f9f9f9;
@@ -93,7 +94,7 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.search-input {
+.contact-list__search-input {
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
@@ -103,43 +104,49 @@ export default {
   transition: border-color 0.3s ease;
 }
 
-.search-input:focus {
+.contact-list__search-input:focus {
   border-color: #007bff;
   outline: none;
 }
 
-.contacts {
+.contact-list__contacts {
   list-style: none;
   padding: 0;
 }
 
-.contact-item {
+.contact-list__contact-item {
   padding: 15px;
   border-bottom: 1px solid #eee;
   transition: background-color 0.3s ease;
 }
 
-.contact-item:hover {
+.contact-list__contact-item:hover {
   background-color: #f1f1f1;
 }
 
-.contact-name {
+.contact-list__contact-name {
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-.contact-details {
+.contact-list__contact-details {
   list-style: none;
   padding: 0;
 }
 
-.contact-detail {
+.contact-list__contact-detail {
   padding: 5px 0;
   font-size: 14px;
 }
 
-.label {
+.contact-list__label {
   font-weight: bold;
   margin-right: 5px;
+}
+
+.contact-list__contact-id {
+  font-size: 12px;
+  color: grey;
+  margin-top: 10px;
 }
 </style>

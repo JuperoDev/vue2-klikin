@@ -9,58 +9,79 @@
 
     <div
       v-if="showDialog"
-      class="dialog-overlay"
+      class="contact-list__dialog-overlay"
       @click="closeDialog"
     >
       <div
-        class="dialog"
+        class="contact-list__dialog"
         @click.stop
       >
-        <h2>Add New Contact</h2>
-        <form @submit.prevent="saveContact">
-          <div class="form-group">
-            <label for="firstname">First Name:</label>
+        <h2 class="contact-list__dialog-title">
+          Add New Contact
+        </h2>
+        <form
+          class="contact-list__form"
+          @submit.prevent="saveContact"
+        >
+          <div class="contact-list__form-group">
+            <label
+              for="firstname"
+              class="contact-list__label"
+            >First Name:</label>
             <input
               id="firstname"
               v-model="newContact.firstname"
+              class="contact-list__input"
               required
             >
           </div>
-          <div class="form-group">
-            <label for="lastname">Last Name:</label>
+          <div class="contact-list__form-group">
+            <label
+              for="lastname"
+              class="contact-list__label"
+            >Last Name:</label>
             <input
               id="lastname"
               v-model="newContact.lastname"
+              class="contact-list__input"
               required
             >
           </div>
-          <div class="form-group">
-            <label for="email">Email:</label>
+          <div class="contact-list__form-group">
+            <label
+              for="email"
+              class="contact-list__label"
+            >Email:</label>
             <input
               id="email"
               v-model="newContact.email"
               type="email"
+              class="contact-list__input"
               required
             >
           </div>
-          <div class="form-group">
-            <label for="phone">Phone Number:</label>
+          <div class="contact-list__form-group">
+            <label
+              for="phone"
+              class="contact-list__label"
+            >Phone Number:</label>
             <input
               id="phone"
               v-model="newContact.phoneNumber"
+              class="contact-list__input"
               required
             >
           </div>
-          <div class="button-group">
+          <div class="contact-list__button-group">
             <button
               type="submit"
-              class="save-button"
+              class="contact-list__save-button"
             >
               Save
             </button>
             <button
               type="button"
-              class="cancel-button"
+              class="contact-list__cancel-button"
               @click="closeDialog"
             >
               Cancel
@@ -75,6 +96,12 @@
 <script>
 export default {
   name: 'DialogButton',
+  props: {
+    contacts: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
       showDialog: false,
@@ -113,8 +140,7 @@ export default {
       this.closeDialog();
     },
     generateId() {
-      // You should implement a more robust ID generation method
-      return Date.now();
+      return this.contacts.length + 1;
     }
   }
 };
@@ -137,7 +163,7 @@ export default {
   background-color: #218838;
 }
 
-.dialog-overlay {
+.contact-list__dialog-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -150,7 +176,7 @@ export default {
   z-index: 1000;
 }
 
-.dialog {
+.contact-list__dialog {
   background-color: white;
   padding: 20px;
   border-radius: 5px;
@@ -159,41 +185,50 @@ export default {
   z-index: 1001;
 }
 
-.form-group {
+.contact-list__dialog-title {
+  margin-bottom: 20px;
+}
+
+.contact-list__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-list__form-group {
   margin-bottom: 15px;
 }
 
-label {
+.contact-list__label {
   display: block;
   margin-bottom: 5px;
 }
 
-input {
+.contact-list__input {
   width: 100%;
   padding: 5px;
   border: 1px solid #ddd;
   border-radius: 3px;
 }
 
-.button-group {
+.contact-list__button-group {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
 
-.save-button, .cancel-button {
+.contact-list__save-button, .contact-list__cancel-button {
   padding: 5px 10px;
   border: none;
   border-radius: 3px;
   cursor: pointer;
 }
 
-.save-button {
+.contact-list__save-button {
   background-color: #28a745;
   color: white;
 }
 
-.cancel-button {
+.contact-list__cancel-button {
   background-color: #dc3545;
   color: white;
 }
