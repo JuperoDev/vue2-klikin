@@ -7,6 +7,26 @@
       autofocus
     >
 
+    <div class="pagination">
+      <button
+        :disabled="currentPage === 1"
+        class="pagination__button"
+        @click="prevPage"
+      >
+        Previous
+      </button>
+      <span class="pagination__info">
+        Page {{ currentPage }} of {{ totalPages }}
+      </span>
+      <button
+        :disabled="currentPage === totalPages"
+        class="pagination__button"
+        @click="nextPage"
+      >
+        Next
+      </button>
+    </div>
+
     <dialog-button
       :contacts="contacts"
       @open-dialog="showDialog = true"
@@ -15,7 +35,7 @@
 
     <ul class="contact-list__contacts">
       <li
-        v-for="contact in filteredContacts"
+        v-for="contact in paginatedContacts"
         :key="contact.id"
         class="contact-list__contact-item"
       >
@@ -43,6 +63,7 @@
   </div>
 </template>
 
+
 <script>
 import DialogButton from './DialogButton.vue';
 
@@ -60,7 +81,9 @@ export default {
   data() {
     return {
       searchQuery: '',
-      showDialog: false
+      showDialog: false,
+      currentPage: 1,
+      resultsPerPage: 4
     };
   },
   computed: {
@@ -74,16 +97,35 @@ export default {
           contact.phoneNumber.some(phone => phone.includes(query))
         )
         .sort((a, b) => a.lastname.localeCompare(b.lastname));
+    },
+    paginatedContacts() {
+      const start = (this.currentPage - 1) * this.resultsPerPage;
+      const end = start + this.resultsPerPage;
+      return this.filteredContacts.slice(start, end);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredContacts.length / this.resultsPerPage);
     }
   },
   methods: {
     addContact(newContact) {
       this.contacts.push(newContact);
       // todo: vuex
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
     }
   }
 };
 </script>
+
 
 <style scoped>
 .contact-list {
@@ -109,18 +151,33 @@ export default {
 }
 
 .contact-list__contacts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
   list-style: none;
   padding: 0;
 }
 
+@media (min-width: 768px) {
+  .contact-list__contacts {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .contact-list__contact-item {
   padding: 15px;
-  border-bottom: 1px solid #eee;
-  transition: background-color 0.3s ease;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  min-height: 150px; /* Set a minimum height for the contact items */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .contact-list__contact-item:hover {
   background-color: #f1f1f1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .contact-list__contact-name {
@@ -129,7 +186,11 @@ export default {
 }
 
 .contact-list__contact-details {
+  flex-grow: 1;
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .contact-list__contact-id {
@@ -144,4 +205,33 @@ export default {
   margin-top: 10px;
   font-size: 12px;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination__button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.pagination__button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.pagination__info {
+  font-size: 16px;
+}
 </style>
+
+
