@@ -18,9 +18,13 @@
       :contacts="contacts"
       @open-dialog="showDialog = true"
       @add-contact="addContact"
+      @new-contact-id="setNewContactPage"
     />
 
-    <ContactDisplay :paginated-contacts="paginatedContacts" />
+    <ContactDisplay 
+      :paginated-contacts="paginatedContacts" 
+      :last-added-contact-id="lastAddedContactId"  
+    />
   </div>
 </template>
 
@@ -47,7 +51,8 @@ export default {
       searchQuery: '',
       showDialog: false,
       currentPage: 1,
-      resultsPerPage: 4
+      resultsPerPage: 4,
+      lastAddedContactId: null  // Track the last added contact ID
     };
   },
   computed: {
@@ -74,7 +79,7 @@ export default {
   methods: {
     addContact(newContact) {
       this.contacts.push(newContact);
-      // todo: vuex
+      this.setNewContactPage(newContact.id);  // Set the page for the new contact
     },
     nextPage() {
       if (this.currentPage < this.totalPages) {
@@ -85,10 +90,17 @@ export default {
       if (this.currentPage > 1) {
         this.currentPage--;
       }
+    },
+    setNewContactPage(contactId) {
+      const index = this.filteredContacts.findIndex(contact => contact.id === contactId);
+      this.currentPage = Math.floor(index / this.resultsPerPage) + 1;
+      this.lastAddedContactId = contactId;  // Set the last added contact ID
     }
   }
 };
 </script>
+
+
 
 <style scoped>
 .contact-list {

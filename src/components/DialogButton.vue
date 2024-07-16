@@ -127,6 +127,7 @@ export default {
         id: this.generateId()
       };
       this.$emit('add-contact', contact);
+      this.$emit('new-contact-id', contact.id);  // Emit new contact ID
       this.closeDialog();
     },
     generateId() {
@@ -135,6 +136,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 .contact-list__dialog-button {
