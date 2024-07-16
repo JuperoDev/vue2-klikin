@@ -8,8 +8,8 @@
     >
 
     <ContactPagination
-      :currentPage="currentPage"
-      :totalPages="totalPages"
+      :current-page="currentPage"
+      :total-pages="totalPages"
       @prevPage="prevPage"
       @nextPage="nextPage"
     />
@@ -20,7 +20,7 @@
       @add-contact="addContact"
     />
 
-    <ContactDisplay :paginatedContacts="paginatedContacts" />
+    <ContactDisplay :paginated-contacts="paginatedContacts" />
   </div>
 </template>
 
