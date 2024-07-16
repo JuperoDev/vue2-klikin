@@ -16,14 +16,6 @@
           @keydown.enter="confirmField(index)"
           @keydown.esc="restoreOriginalValue(index)"
         >
-        <button
-          v-if="index !== values.length - 1 && values[index]"
-          type="button"
-          class="field-accumulator__delete-button"
-          @click="deleteField(index)"
-        >
-          Delete
-        </button>
       </div>
       <div v-else class="field-accumulator__value-group">
         <span class="field-accumulator__value">{{ value }}</span>
@@ -42,6 +34,7 @@
             <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" />
           </svg>
         </button>
+        <RemoveButton @remove="deleteField(index)" v-if="index !== values.length - 1 && values[index]" />
       </div>
     </div>
     <button
@@ -55,12 +48,14 @@
   </div>
 </template>
 
-
-
-
 <script>
+import RemoveButton from './RemoveButton.vue';
+
 export default {
   name: 'FieldAccumulator',
+  components: {
+    RemoveButton
+  },
   props: {
     type: {
       type: String,
@@ -145,10 +140,6 @@ export default {
 };
 </script>
 
-
-
-
-
 <style scoped>
 .field-accumulator {
   margin-bottom: 15px;
@@ -165,22 +156,18 @@ export default {
   margin-bottom: 5px;
 }
 
+.field-accumulator__input-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
 .field-accumulator__input {
   width: 100%;
   padding: 5px;
   border: 1px solid #ddd;
   border-radius: 3px;
   margin-right: 10px;
-}
-
-.field-accumulator__delete-button {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  padding: 5px 10px;
-  margin-left: 5px;
 }
 
 .field-accumulator__value-group {
