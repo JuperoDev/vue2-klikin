@@ -26,8 +26,14 @@
           @keydown.enter="confirmField(index)"
           @keydown.esc="restoreOriginalValue(index)"
         >
-        <TickButton v-if="index !== values.length - 1" @confirm="confirmField(index)" />
-        <CancelButton v-if="index !== values.length - 1" @cancel="restoreOriginalValue(index)" />
+        <TickButton
+          v-if="index !== values.length - 1"
+          @confirm="confirmField(index)"
+        />
+        <CancelButton
+          v-if="index !== values.length - 1"
+          @cancel="restoreOriginalValue(index)"
+        />
       </div>
       <div
         v-else
