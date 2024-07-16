@@ -14,7 +14,7 @@
       @nextPage="nextPage"
     />
 
-    <dialog-button
+    <DialogButton
       :contacts="contacts"
       @open-dialog="showDialog = true"
       @add-contact="addContact"
