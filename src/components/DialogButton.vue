@@ -100,7 +100,7 @@ export default {
       newContact: {
         firstname: '',
         lastname: '',
-        email: ['new email'],
+        email: ['Email'],
         phoneNumber: ['']
       }
     };
@@ -117,7 +117,7 @@ export default {
       this.newContact = {
         firstname: '',
         lastname: '',
-        email: ['new email'],
+        email: ['Email'],
         phoneNumber: ['']
       };
     },
