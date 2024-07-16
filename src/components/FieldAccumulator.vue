@@ -11,46 +11,41 @@
       :key="index"
       class="field-accumulator__input-group"
     >
-      <input
+      <div
         v-if="editableIndex === index || index === values.length - 1"
-        :id="type + index"
-        v-model="values[index]"
-        :type="inputType"
-        :placeholder="placeholder"
-        class="field-accumulator__input"
-        required
-        @blur="validateField(index)"
-        @keydown.enter="confirmField(index)"
+        class="field-accumulator__input-container"
       >
+        <input
+          :id="type + index"
+          v-model="values[index]"
+          :type="inputType"
+          :placeholder="placeholder"
+          class="field-accumulator__input"
+          required
+          @blur="validateField(index)"
+          @keydown.enter="confirmField(index)"
+          @keydown.esc="restoreOriginalValue(index)"
+        >
+        <TickButton
+          v-if="index !== values.length - 1"
+          @confirm="confirmField(index)"
+        />
+        <CancelButton
+          v-if="index !== values.length - 1"
+          @cancel="restoreOriginalValue(index)"
+        />
+      </div>
       <div
         v-else
         class="field-accumulator__value-group"
       >
         <span class="field-accumulator__value">{{ value }}</span>
-        <button
-          type="button"
-          class="field-accumulator__edit-button"
-          @click="toggleEdit(index)"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="field-accumulator__edit-icon"
-          >
-            <path d="M12 20h9" />
-            <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" />
-          </svg>
-        </button>
+        <EditButton @edit="toggleEdit(index)" />
+        <RemoveButton
+          v-if="index !== values.length - 1 && values[index]"
+          @remove="deleteField(index)"
+        />
       </div>
-      <remove-button
-        v-if="index !== values.length - 1"
-        @remove="removeField(index)"
-      />
     </div>
     <button
       type="button"
@@ -58,18 +53,24 @@
       :disabled="!canAddField"
       @click="addField"
     >
-      Add another {{ label }}
+      Save and add another {{ label }}
     </button>
   </div>
 </template>
 
 <script>
 import RemoveButton from './RemoveButton.vue';
+import EditButton from './EditButton.vue';
+import TickButton from './TickButton.vue';
+import CancelButton from './CancelButton.vue';
 
 export default {
   name: 'FieldAccumulator',
   components: {
-    RemoveButton
+    RemoveButton,
+    EditButton,
+    TickButton,
+    CancelButton
   },
   props: {
     type: {
@@ -84,11 +85,12 @@ export default {
   data() {
     return {
       editableIndex: null,
+      originalValue: ''
     };
   },
   computed: {
     label() {
-      return this.type === 'email' ? 'Email' : 'Phone Number';
+      return this.type === 'email' ? 'Email' : 'Phone Number'; // Updated Label
     },
     inputType() {
       return this.type === 'email' ? 'email' : 'text';
@@ -103,12 +105,13 @@ export default {
   },
   methods: {
     addField() {
-      if (this.canAddField) {
+      const lastValue = this.values[this.values.length - 1];
+      if (lastValue && this.isValidField(lastValue)) {
         this.values.push('');
         this.editableIndex = this.values.length - 1;
       }
     },
-    removeField(index) {
+    deleteField(index) {
       this.values.splice(index, 1);
       if (this.editableIndex === index) {
         this.editableIndex = null;
@@ -119,21 +122,24 @@ export default {
         this.validateField(this.editableIndex);
       }
       this.editableIndex = this.editableIndex === index ? null : index;
+      if (this.editableIndex !== null) {
+        this.originalValue = this.values[index]; // Store the original value
+      }
     },
     confirmField(index) {
-      if (!this.isValidField(this.values[index])) {
-        // this.showValidationError();
-        this.values[index] = '';
-        this.editableIndex = index;
-      } else {
-        this.editableIndex = null;
+      if (this.values[index].trim() === '' || !this.isValidField(this.values[index])) {
+        this.values[index] = this.originalValue; // Restore the original value
       }
+      this.editableIndex = null;
     },
     validateField(index) {
-      if (!this.isValidField(this.values[index])) {
-        // this.showValidationError();
-        this.values[index] = '';
+      if (this.values[index].trim() === '' || !this.isValidField(this.values[index])) {
+        this.values[index] = this.originalValue; // Restore the original value
       }
+    },
+    restoreOriginalValue(index) {
+      this.values[index] = this.originalValue; // Restore the original value
+      this.editableIndex = null;
     },
     isValidField(value) {
       if (this.type === 'email') {
@@ -145,14 +151,10 @@ export default {
     isValidEmail(email) {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailPattern.test(email);
-    },
-    // showValidationError() {
-    //   alert(this.type === 'email' ? 'Please enter a valid email address.' : 'Please enter a valid value.');
-    // }
+    }
   }
 };
 </script>
-
 
 <style scoped>
 .field-accumulator {
@@ -168,6 +170,12 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+}
+
+.field-accumulator__input-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .field-accumulator__input {
@@ -192,19 +200,6 @@ export default {
   background-color: #f9f9f9;
   color: #999;
   margin-right: 10px;
-}
-
-.field-accumulator__edit-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.field-accumulator__edit-icon {
-  width: 16px;
-  height: 16px;
-  color: #007bff;
 }
 
 .field-accumulator__add-button {
