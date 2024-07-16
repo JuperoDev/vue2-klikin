@@ -13,35 +13,27 @@
       stroke-linejoin="round"
       class="remove-button__icon"
     >
-      <line
-        x1="18"
-        y1="6"
-        x2="6"
-        y2="18"
-      />
-      <line
-        x1="6"
-        y1="6"
-        x2="18"
-        y2="18"
-      />
+      <path d="M3 6h18" />
+      <path d="M19 6l-2 14H7L5 6" />
+      <path d="M10 11v6" />
+      <path d="M14 11v6" />
+      <path d="M5 6L6 4h12l1 2" />
     </svg>
   </button>
 </template>
-  
-  <style scoped>
-  .remove-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    margin-left: 10px;
-  }
-  
-  .remove-button__icon {
-    width: 16px;
-    height: 16px;
-    color: #dc3545;
-  }
-  </style>
-  
+
+<style scoped>
+.remove-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 10px;
+}
+
+.remove-button__icon {
+  width: 16px;
+  height: 16px;
+  color: #dc3545;
+}
+</style>

@@ -26,31 +26,15 @@
           @keydown.enter="confirmField(index)"
           @keydown.esc="restoreOriginalValue(index)"
         >
+        <TickButton v-if="index !== values.length - 1" @confirm="confirmField(index)" />
+        <CancelButton v-if="index !== values.length - 1" @cancel="restoreOriginalValue(index)" />
       </div>
       <div
         v-else
         class="field-accumulator__value-group"
       >
         <span class="field-accumulator__value">{{ value }}</span>
-        <button
-          type="button"
-          class="field-accumulator__edit-button"
-          @click="toggleEdit(index)"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="field-accumulator__edit-icon"
-          >
-            <path d="M12 20h9" />
-            <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" />
-          </svg>
-        </button>
+        <EditButton @edit="toggleEdit(index)" />
         <RemoveButton
           v-if="index !== values.length - 1 && values[index]"
           @remove="deleteField(index)"
@@ -63,18 +47,24 @@
       :disabled="!canAddField"
       @click="addField"
     >
-      Add another {{ label }}
+      Save and add another {{ label }}
     </button>
   </div>
 </template>
 
 <script>
 import RemoveButton from './RemoveButton.vue';
+import EditButton from './EditButton.vue';
+import TickButton from './TickButton.vue';
+import CancelButton from './CancelButton.vue';
 
 export default {
   name: 'FieldAccumulator',
   components: {
-    RemoveButton
+    RemoveButton,
+    EditButton,
+    TickButton,
+    CancelButton
   },
   props: {
     type: {
@@ -204,19 +194,6 @@ export default {
   background-color: #f9f9f9;
   color: #999;
   margin-right: 10px;
-}
-
-.field-accumulator__edit-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.field-accumulator__edit-icon {
-  width: 16px;
-  height: 16px;
-  color: #007bff;
 }
 
 .field-accumulator__add-button {
