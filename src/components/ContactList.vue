@@ -7,25 +7,12 @@
       autofocus
     >
 
-    <div class="pagination">
-      <button
-        :disabled="currentPage === 1"
-        class="pagination__button"
-        @click="prevPage"
-      >
-        Previous
-      </button>
-      <span class="pagination__info">
-        Page {{ currentPage }} of {{ totalPages }}
-      </span>
-      <button
-        :disabled="currentPage === totalPages"
-        class="pagination__button"
-        @click="nextPage"
-      >
-        Next
-      </button>
-    </div>
+    <ContactPagination
+      :currentPage="currentPage"
+      :totalPages="totalPages"
+      @prevPage="prevPage"
+      @nextPage="nextPage"
+    />
 
     <dialog-button
       :contacts="contacts"
@@ -33,44 +20,21 @@
       @add-contact="addContact"
     />
 
-    <ul class="contact-list__contacts">
-      <li
-        v-for="contact in paginatedContacts"
-        :key="contact.id"
-        class="contact-list__contact-item"
-      >
-        <div class="contact-list__contact-name">
-          {{ contact.firstname }} {{ contact.lastname }}
-        </div>
-        <div class="contact-list__contact-details">
-          <div v-if="contact.phoneNumber.length">
-            <span class="contact-list__label">Phone:</span>
-            {{ contact.phoneNumber.join(', ') }}
-          </div>
-          <div v-if="contact.email.length">
-            <span class="contact-list__label">Email:</span>
-            {{ contact.email.join(', ') }}
-          </div>
-        </div>
-        <div class="contact-list__contact-id">
-          ID: {{ contact.id }}
-        </div>
-        <!-- <div class="contact-list__contact-object">
-          <pre>{{ contact }}</pre> 
-        </div> -->
-      </li>
-    </ul>
+    <ContactDisplay :paginatedContacts="paginatedContacts" />
   </div>
 </template>
 
-
 <script>
 import DialogButton from './DialogButton.vue';
+import ContactDisplay from './ContactDisplay.vue';
+import ContactPagination from './ContactPagination.vue';
 
 export default {
   name: "ContactList",
   components: {
-    DialogButton
+    DialogButton,
+    ContactDisplay,
+    ContactPagination
   },
   props: {
     contacts: {
@@ -126,7 +90,6 @@ export default {
 };
 </script>
 
-
 <style scoped>
 .contact-list {
   padding: 20px;
@@ -138,7 +101,7 @@ export default {
 .contact-list__search-input {
   width: 100%;
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 16px;
@@ -149,89 +112,4 @@ export default {
   border-color: #007bff;
   outline: none;
 }
-
-.contact-list__contacts {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  list-style: none;
-  padding: 0;
-}
-
-@media (min-width: 768px) {
-  .contact-list__contacts {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.contact-list__contact-item {
-  padding: 15px;
-  border: 1px solid #eee;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  min-height: 150px; /* Set a minimum height for the contact items */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.contact-list__contact-item:hover {
-  background-color: #f1f1f1;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.contact-list__contact-name {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.contact-list__contact-details {
-  flex-grow: 1;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
-.contact-list__contact-id {
-  font-size: 12px;
-  color: grey;
-}
-
-.contact-list__contact-object {
-  background-color: #f0f0f0;
-  padding: 10px;
-  border-radius: 5px;
-  margin-top: 10px;
-  font-size: 12px;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.pagination__button {
-  padding: 10px 20px;
-  margin: 0 5px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.pagination__button:disabled {
-  background-color: #ddd;
-  cursor: not-allowed;
-}
-
-.pagination__info {
-  font-size: 16px;
-}
 </style>
-
-
