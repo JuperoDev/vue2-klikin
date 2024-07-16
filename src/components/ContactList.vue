@@ -8,11 +8,19 @@
     >
 
     <ContactPagination
+      v-if="filteredContacts.length > 0"
       :current-page="currentPage"
       :total-pages="totalPages"
       @prevPage="prevPage"
       @nextPage="nextPage"
     />
+
+    <div
+      v-else
+      class="no-results"
+    >
+      No results
+    </div>
 
     <DialogButton
       :contacts="contacts"
@@ -100,8 +108,6 @@ export default {
 };
 </script>
 
-
-
 <style scoped>
 .contact-list {
   padding: 20px;
@@ -123,5 +129,12 @@ export default {
 .contact-list__search-input:focus {
   border-color: #007bff;
   outline: none;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 16px;
+  color: #888;
+  margin-top: 20px;
 }
 </style>
