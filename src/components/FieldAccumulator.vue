@@ -21,12 +21,21 @@
         required
         @blur="validateField(index)"
         @keydown.enter="confirmField(index)"
+        @keydown.esc="restoreOriginalValue(index)"
       >
+      <button
+        v-if="editableIndex === index || index === values.length - 1"
+        type="button"
+        class="field-accumulator__delete-button"
+        @click="deleteField(index)"
+      >
+        Delete
+      </button>
       <div
         v-else
         class="field-accumulator__value-group"
       >
-        <span class="field-accumulator__value">{{ value }}</span>
+        <span class="field-accumulator__value">{{ value || placeholder }}</span>
         <button
           type="button"
           class="field-accumulator__edit-button"
@@ -55,8 +64,8 @@
     <button
       type="button"
       class="field-accumulator__add-button"
-      @click="addField"
       :disabled="!canAddField"
+      @click="addField"
     >
       Add another {{ label }}
     </button>
@@ -84,11 +93,12 @@ export default {
   data() {
     return {
       editableIndex: null,
+      originalValue: ''
     };
   },
   computed: {
     label() {
-      return this.type === 'email' ? 'Email' : 'Phone Number';
+      return this.type === 'email' ? '' : ''; //Storing Label
     },
     inputType() {
       return this.type === 'email' ? 'email' : 'text';
@@ -103,7 +113,8 @@ export default {
   },
   methods: {
     addField() {
-      if (this.canAddField) {
+      const lastValue = this.values[this.values.length - 1];
+      if (lastValue && this.isValidField(lastValue)) {
         this.values.push('');
         this.editableIndex = this.values.length - 1;
       }
@@ -114,26 +125,35 @@ export default {
         this.editableIndex = null;
       }
     },
+    deleteField(index) {
+      this.values.splice(index, 1);
+      if (this.editableIndex === index) {
+        this.editableIndex = null;
+      }
+    },
     toggleEdit(index) {
       if (this.editableIndex !== null) {
         this.validateField(this.editableIndex);
       }
       this.editableIndex = this.editableIndex === index ? null : index;
+      if (this.editableIndex !== null) {
+        this.originalValue = this.values[index]; // Store the original value
+      }
     },
     confirmField(index) {
-      if (!this.isValidField(this.values[index])) {
-        // this.showValidationError();
-        this.values[index] = '';
-        this.editableIndex = index;
-      } else {
-        this.editableIndex = null;
+      if (this.values[index].trim() === '' || !this.isValidField(this.values[index])) {
+        this.values[index] = this.originalValue; // Restore the original value
       }
+      this.editableIndex = null;
     },
     validateField(index) {
-      if (!this.isValidField(this.values[index])) {
-        // this.showValidationError();
-        this.values[index] = '';
+      if (this.values[index].trim() === '' || !this.isValidField(this.values[index])) {
+        this.values[index] = this.originalValue; // Restore the original value
       }
+    },
+    restoreOriginalValue(index) {
+      this.values[index] = this.originalValue; // Restore the original value
+      this.editableIndex = null;
     },
     isValidField(value) {
       if (this.type === 'email') {
@@ -145,14 +165,10 @@ export default {
     isValidEmail(email) {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailPattern.test(email);
-    },
-    // showValidationError() {
-    //   alert(this.type === 'email' ? 'Please enter a valid email address.' : 'Please enter a valid value.');
-    // }
+    }
   }
 };
 </script>
-
 
 <style scoped>
 .field-accumulator {
@@ -176,6 +192,16 @@ export default {
   border: 1px solid #ddd;
   border-radius: 3px;
   margin-right: 10px;
+}
+
+.field-accumulator__delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 5px;
 }
 
 .field-accumulator__value-group {
