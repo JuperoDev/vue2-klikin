@@ -108,6 +108,7 @@ export default {
   methods: {
     openDialog() {
       this.showDialog = true;
+      this.$emit('dialog-opened');
     },
     closeDialog() {
       this.showDialog = false;

@@ -27,6 +27,7 @@
       @open-dialog="showDialog = true"
       @add-contact="addContact"
       @new-contact-id="setNewContactPage"
+      @dialog-opened="resetSearch"
     />
 
     <ContactDisplay 
@@ -85,6 +86,8 @@ export default {
     }
   },
   methods: {
+
+    
     addContact(newContact) {
       this.contacts.push(newContact);
       this.setNewContactPage(newContact.id);  // Set the page for the new contact
@@ -103,6 +106,11 @@ export default {
       const index = this.filteredContacts.findIndex(contact => contact.id === contactId);
       this.currentPage = Math.floor(index / this.resultsPerPage) + 1;
       this.lastAddedContactId = contactId;  // Set the last added contact ID
+    },
+
+    resetSearch() {
+      this.searchQuery = '';
+      this.currentPage = 1; // Reset to first page
     }
   }
 };
