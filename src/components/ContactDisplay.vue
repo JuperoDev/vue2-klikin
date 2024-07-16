@@ -1,29 +1,29 @@
 <template>
-    <ul class="contact-list__contacts">
-      <li
-        v-for="contact in paginatedContacts"
-        :key="contact.id"
-        class="contact-list__contact-item"
-      >
-        <div class="contact-list__contact-name">
-          {{ contact.firstname }} {{ contact.lastname }}
+  <ul class="contact-list__contacts">
+    <li
+      v-for="contact in paginatedContacts"
+      :key="contact.id"
+      class="contact-list__contact-item"
+    >
+      <div class="contact-list__contact-name">
+        {{ contact.firstname }} {{ contact.lastname }}
+      </div>
+      <div class="contact-list__contact-details">
+        <div v-if="contact.phoneNumber.length">
+          <span class="contact-list__label">Phone:</span>
+          {{ contact.phoneNumber.join(', ') }}
         </div>
-        <div class="contact-list__contact-details">
-          <div v-if="contact.phoneNumber.length">
-            <span class="contact-list__label">Phone:</span>
-            {{ contact.phoneNumber.join(', ') }}
-          </div>
-          <div v-if="contact.email.length">
-            <span class="contact-list__label">Email:</span>
-            {{ contact.email.join(', ') }}
-          </div>
+        <div v-if="contact.email.length">
+          <span class="contact-list__label">Email:</span>
+          {{ contact.email.join(', ') }}
         </div>
-        <div class="contact-list__contact-id">
-          ID: {{ contact.id }}
-        </div>
-      </li>
-    </ul>
-  </template>
+      </div>
+      <div class="contact-list__contact-id">
+        ID: {{ contact.id }}
+      </div>
+    </li>
+  </ul>
+</template>
   
   <script>
   export default {

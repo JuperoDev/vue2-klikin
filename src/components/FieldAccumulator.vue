@@ -55,8 +55,8 @@
     <button
       type="button"
       class="field-accumulator__add-button"
-      @click="addField"
       :disabled="!canAddField"
+      @click="addField"
     >
       Add another {{ label }}
     </button>

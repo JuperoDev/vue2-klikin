@@ -1,24 +1,24 @@
 <template>
-    <div class="pagination">
-      <button
-        @click="$emit('prevPage')"
-        :disabled="currentPage === 1"
-        class="pagination__button"
-      >
-        Previous
-      </button>
-      <span class="pagination__info">
-        Page {{ currentPage }} of {{ totalPages }}
-      </span>
-      <button
-        @click="$emit('nextPage')"
-        :disabled="currentPage === totalPages"
-        class="pagination__button"
-      >
-        Next
-      </button>
-    </div>
-  </template>
+  <div class="pagination">
+    <button
+      :disabled="currentPage === 1"
+      class="pagination__button"
+      @click="$emit('prevPage')"
+    >
+      Previous
+    </button>
+    <span class="pagination__info">
+      Page {{ currentPage }} of {{ totalPages }}
+    </span>
+    <button
+      :disabled="currentPage === totalPages"
+      class="pagination__button"
+      @click="$emit('nextPage')"
+    >
+      Next
+    </button>
+  </div>
+</template>
   
   <script>
   export default {
