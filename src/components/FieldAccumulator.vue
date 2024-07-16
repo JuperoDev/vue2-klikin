@@ -56,6 +56,7 @@
       type="button"
       class="field-accumulator__add-button"
       @click="addField"
+      :disabled="!canAddField"
     >
       Add another {{ label }}
     </button>
@@ -82,7 +83,7 @@ export default {
   },
   data() {
     return {
-      editableIndex: 0
+      editableIndex: null,
     };
   },
   computed: {
@@ -94,12 +95,18 @@ export default {
     },
     placeholder() {
       return this.type === 'email' ? 'Enter email' : 'Enter phone number';
+    },
+    canAddField() {
+      const lastValue = this.values[this.values.length - 1];
+      return lastValue && this.isValidField(lastValue);
     }
   },
   methods: {
     addField() {
-      this.values.push('');
-      this.editableIndex = this.values.length - 1;
+      if (this.canAddField) {
+        this.values.push('');
+        this.editableIndex = this.values.length - 1;
+      }
     },
     removeField(index) {
       this.values.splice(index, 1);
@@ -114,8 +121,8 @@ export default {
       this.editableIndex = this.editableIndex === index ? null : index;
     },
     confirmField(index) {
-      if (this.type === 'email' && !this.isValidEmail(this.values[index])) {
-        alert('Please enter a valid email address.');
+      if (!this.isValidField(this.values[index])) {
+        // this.showValidationError();
         this.values[index] = '';
         this.editableIndex = index;
       } else {
@@ -123,18 +130,29 @@ export default {
       }
     },
     validateField(index) {
-      if (this.type === 'email' && !this.isValidEmail(this.values[index])) {
-        alert('Please enter a valid email address.');
+      if (!this.isValidField(this.values[index])) {
+        // this.showValidationError();
         this.values[index] = '';
       }
+    },
+    isValidField(value) {
+      if (this.type === 'email') {
+        return this.isValidEmail(value);
+      }
+      // Add phone number validation if needed
+      return value.trim() !== '';
     },
     isValidEmail(email) {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailPattern.test(email);
-    }
+    },
+    // showValidationError() {
+    //   alert(this.type === 'email' ? 'Please enter a valid email address.' : 'Please enter a valid value.');
+    // }
   }
 };
 </script>
+
 
 <style scoped>
 .field-accumulator {
