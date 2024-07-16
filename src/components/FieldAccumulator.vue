@@ -1,46 +1,33 @@
 <template>
   <div class="field-accumulator">
-    <label
-      :for="type"
-      class="field-accumulator__label"
-    >
+    <label :for="type" class="field-accumulator__label">
       {{ label }}
     </label>
-    <div
-      v-for="(value, index) in values"
-      :key="index"
-      class="field-accumulator__input-group"
-    >
-      <input
-        v-if="editableIndex === index || index === values.length - 1"
-        :id="type + index"
-        v-model="values[index]"
-        :type="inputType"
-        :placeholder="placeholder"
-        class="field-accumulator__input"
-        required
-        @blur="validateField(index)"
-        @keydown.enter="confirmField(index)"
-        @keydown.esc="restoreOriginalValue(index)"
-      >
-      <button
-        v-if="editableIndex === index || index === values.length - 1"
-        type="button"
-        class="field-accumulator__delete-button"
-        @click="deleteField(index)"
-      >
-        Delete
-      </button>
-      <div
-        v-else
-        class="field-accumulator__value-group"
-      >
-        <span class="field-accumulator__value">{{ value || placeholder }}</span>
-        <button
-          type="button"
-          class="field-accumulator__edit-button"
-          @click="toggleEdit(index)"
+    <div v-for="(value, index) in values" :key="index" class="field-accumulator__input-group">
+      <div v-if="editableIndex === index || index === values.length - 1" class="field-accumulator__input-container">
+        <input
+          :id="type + index"
+          v-model="values[index]"
+          :type="inputType"
+          :placeholder="placeholder"
+          class="field-accumulator__input"
+          required
+          @blur="validateField(index)"
+          @keydown.enter="confirmField(index)"
+          @keydown.esc="restoreOriginalValue(index)"
         >
+        <button
+          v-if="index !== values.length - 1 && values[index]"
+          type="button"
+          class="field-accumulator__delete-button"
+          @click="deleteField(index)"
+        >
+          Delete
+        </button>
+      </div>
+      <div v-else class="field-accumulator__value-group">
+        <span class="field-accumulator__value">{{ value }}</span>
+        <button type="button" class="field-accumulator__edit-button" @click="toggleEdit(index)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -56,10 +43,6 @@
           </svg>
         </button>
       </div>
-      <remove-button
-        v-if="index !== values.length - 1"
-        @remove="removeField(index)"
-      />
     </div>
     <button
       type="button"
@@ -72,14 +55,12 @@
   </div>
 </template>
 
-<script>
-import RemoveButton from './RemoveButton.vue';
 
+
+
+<script>
 export default {
   name: 'FieldAccumulator',
-  components: {
-    RemoveButton
-  },
   props: {
     type: {
       type: String,
@@ -98,7 +79,7 @@ export default {
   },
   computed: {
     label() {
-      return this.type === 'email' ? '' : ''; //Storing Label
+      return this.type === 'email' ? 'Email' : 'Phone Number'; // Updated Label
     },
     inputType() {
       return this.type === 'email' ? 'email' : 'text';
@@ -117,12 +98,6 @@ export default {
       if (lastValue && this.isValidField(lastValue)) {
         this.values.push('');
         this.editableIndex = this.values.length - 1;
-      }
-    },
-    removeField(index) {
-      this.values.splice(index, 1);
-      if (this.editableIndex === index) {
-        this.editableIndex = null;
       }
     },
     deleteField(index) {
@@ -169,6 +144,10 @@ export default {
   }
 };
 </script>
+
+
+
+
 
 <style scoped>
 .field-accumulator {
