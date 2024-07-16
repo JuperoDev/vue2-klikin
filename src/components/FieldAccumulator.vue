@@ -57,7 +57,7 @@
       class="field-accumulator__add-button"
       @click="addField"
     >
-      Add {{ label }}
+      Add another {{ label }}
     </button>
   </div>
 </template>
