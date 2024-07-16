@@ -1,10 +1,20 @@
 <template>
   <div class="field-accumulator">
-    <label :for="type" class="field-accumulator__label">
+    <label
+      :for="type"
+      class="field-accumulator__label"
+    >
       {{ label }}
     </label>
-    <div v-for="(value, index) in values" :key="index" class="field-accumulator__input-group">
-      <div v-if="editableIndex === index || index === values.length - 1" class="field-accumulator__input-container">
+    <div
+      v-for="(value, index) in values"
+      :key="index"
+      class="field-accumulator__input-group"
+    >
+      <div
+        v-if="editableIndex === index || index === values.length - 1"
+        class="field-accumulator__input-container"
+      >
         <input
           :id="type + index"
           v-model="values[index]"
@@ -17,9 +27,16 @@
           @keydown.esc="restoreOriginalValue(index)"
         >
       </div>
-      <div v-else class="field-accumulator__value-group">
+      <div
+        v-else
+        class="field-accumulator__value-group"
+      >
         <span class="field-accumulator__value">{{ value }}</span>
-        <button type="button" class="field-accumulator__edit-button" @click="toggleEdit(index)">
+        <button
+          type="button"
+          class="field-accumulator__edit-button"
+          @click="toggleEdit(index)"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -34,7 +51,10 @@
             <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" />
           </svg>
         </button>
-        <RemoveButton @remove="deleteField(index)" v-if="index !== values.length - 1 && values[index]" />
+        <RemoveButton
+          v-if="index !== values.length - 1 && values[index]"
+          @remove="deleteField(index)"
+        />
       </div>
     </div>
     <button
