@@ -22,23 +22,22 @@
         <div class="contact-list__contact-name">
           {{ contact.firstname }} {{ contact.lastname }}
         </div>
-        <ul class="contact-list__contact-details">
-          <li
-            v-for="(phone, index) in contact.phoneNumber"
-            :key="'phone'+index"
-            class="contact-list__contact-detail"
-          >
-            <span class="contact-list__label">Phone:</span> {{ phone }}
-          </li>
-          <li
-            v-for="(email, index) in contact.email"
-            :key="'email'+index"
-            class="contact-list__contact-detail"
-          >
-            <span class="contact-list__label">Email:</span> {{ email }}
-          </li>
-        </ul>
-        <!-- <div class="contact-list__contact-id">ID: {{ contact.id }}</div> this is just to show we have generated the id -->
+        <div class="contact-list__contact-details">
+          <div v-if="contact.phoneNumber.length">
+            <span class="contact-list__label">Phone:</span>
+            {{ contact.phoneNumber.join(', ') }}
+          </div>
+          <div v-if="contact.email.length">
+            <span class="contact-list__label">Email:</span>
+            {{ contact.email.join(', ') }}
+          </div>
+        </div>
+        <div class="contact-list__contact-id">
+          ID: {{ contact.id }}
+        </div>
+        <!-- <div class="contact-list__contact-object">
+          <pre>{{ contact }}</pre> 
+        </div> -->
       </li>
     </ul>
   </div>
@@ -130,23 +129,19 @@ export default {
 }
 
 .contact-list__contact-details {
-  list-style: none;
-  padding: 0;
-}
-
-.contact-list__contact-detail {
-  padding: 5px 0;
-  font-size: 14px;
-}
-
-.contact-list__label {
-  font-weight: bold;
-  margin-right: 5px;
+  margin-bottom: 10px;
 }
 
 .contact-list__contact-id {
   font-size: 12px;
   color: grey;
+}
+
+.contact-list__contact-object {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
   margin-top: 10px;
+  font-size: 12px;
 }
 </style>
