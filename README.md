@@ -1,3 +1,10 @@
+## Docker: 
+docker build -t klikin-contact-list .
+
+docker run -p 8080:8080 klikin-contact-list
+
+
+
 ## Qué hay que hacer
 Crear una aplicación básica de gestión de contactos.
 
