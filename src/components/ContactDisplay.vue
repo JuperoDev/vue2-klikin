@@ -36,7 +36,7 @@ export default {
     },
     lastAddedContactId: {
       type: [Number, null], // Allow null for the initial state
-      required: true
+      default: null
     }
   }
 };
