@@ -23,7 +23,7 @@
     </div>
 
     <DialogButton
-      :contacts="contacts"
+      :contacts="localContacts"
       @open-dialog="showDialog = true"
       @add-contact="addContact"
       @new-contact-id="setNewContactPage"
@@ -57,6 +57,7 @@ export default {
   },
   data() {
     return {
+      localContacts: [...this.contacts],
       searchQuery: '',
       showDialog: false,
       currentPage: 1,
@@ -67,7 +68,7 @@ export default {
   computed: {
     filteredContacts() {
       const query = this.searchQuery.toLowerCase();
-      return this.contacts
+      return this.localContacts
         .filter(contact => 
           contact.firstname.toLowerCase().includes(query) ||
           contact.lastname.toLowerCase().includes(query) ||
@@ -85,12 +86,16 @@ export default {
       return Math.ceil(this.filteredContacts.length / this.resultsPerPage);
     }
   },
+  watch: {
+    contacts(newContacts) {
+      this.localContacts = [...newContacts];
+    }
+  },
   methods: {
-
-    
     addContact(newContact) {
-      this.contacts.push(newContact);
+      this.localContacts.push(newContact);
       this.setNewContactPage(newContact.id);  // Set the page for the new contact
+      this.$emit('update:contacts', this.localContacts);
     },
     nextPage() {
       if (this.currentPage < this.totalPages) {
@@ -107,7 +112,6 @@ export default {
       this.currentPage = Math.floor(index / this.resultsPerPage) + 1;
       this.lastAddedContactId = contactId;  // Set the last added contact ID
     },
-
     resetSearch() {
       this.searchQuery = '';
       this.currentPage = 1; // Reset to first page

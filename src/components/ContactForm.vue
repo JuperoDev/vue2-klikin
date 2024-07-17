@@ -1,7 +1,7 @@
 <template>
   <form
     class="contact-list__form"
-    @submit.prevent="$emit('save')"
+    @submit.prevent="saveContact"
   >
     <div class="contact-list__form-group">
       <label
@@ -10,7 +10,7 @@
       >First Name:</label>
       <input
         id="firstname"
-        v-model="newContact.firstname"
+        v-model="localContact.firstname"
         class="contact-list__input"
         required
       >
@@ -22,7 +22,7 @@
       >Last Name:</label>
       <input
         id="lastname"
-        v-model="newContact.lastname"
+        v-model="localContact.lastname"
         class="contact-list__input"
         required
       >
@@ -30,13 +30,15 @@
     <div class="contact-list__form-group">
       <FieldAccumulator
         type="email"
-        :values="newContact.email"
+        :values="localContact.email"
+        @update:values="updateEmails"
       />
     </div>
     <div class="contact-list__form-group">
       <FieldAccumulator
         type="phone"
-        :values="newContact.phoneNumber"
+        :values="localContact.phoneNumber"
+        @update:values="updatePhoneNumbers"
       />
     </div>
     <div class="contact-list__button-group">
@@ -56,66 +58,82 @@
     </div>
   </form>
 </template>
-  
-  <script>
-  import FieldAccumulator from './FieldAccumulator.vue';
-  
-  export default {
-    name: 'ContactForm',
-    components: {
-      FieldAccumulator
-    },
-    props: {
-      newContact: {
-        type: Object,
-        required: true
-      }
+
+<script>
+import FieldAccumulator from './FieldAccumulator.vue';
+
+export default {
+  name: 'ContactForm',
+  components: {
+    FieldAccumulator
+  },
+  props: {
+    newContact: {
+      type: Object,
+      required: true
     }
-  };
-  </script>
-  
-  <style scoped>
-  .contact-list__form {
-    display: flex;
-    flex-direction: column;
+  },
+  data() {
+    return {
+      localContact: { ...this.newContact }
+    };
+  },
+  methods: {
+    updateEmails(updatedEmails) {
+      this.localContact.email = updatedEmails;
+    },
+    updatePhoneNumbers(updatedPhoneNumbers) {
+      this.localContact.phoneNumber = updatedPhoneNumbers;
+    },
+    saveContact() {
+      this.$emit('save', this.localContact);
+    }
   }
-  
-  .contact-list__form-group {
-    margin-bottom: 15px;
-  }
-  
-  .contact-list__label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .contact-list__input {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-  }
-  
-  .contact-list__button-group {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .contact-list__save-button, .contact-list__cancel-button {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  
-  .contact-list__save-button {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .contact-list__cancel-button {
-    background-color: #dc3545;
-    color: white;
-  }
-  </style>
+};
+</script>
+
+<style scoped>
+.contact-list__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-list__form-group {
+  margin-bottom: 15px;
+}
+
+.contact-list__label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.contact-list__input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.contact-list__button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.contact-list__save-button, .contact-list__cancel-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.contact-list__save-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.contact-list__cancel-button {
+  background-color: #dc3545;
+  color: white;
+}
+</style>

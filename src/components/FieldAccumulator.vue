@@ -7,17 +7,17 @@
       {{ label }}
     </label>
     <div
-      v-for="(value, index) in values"
+      v-for="(value, index) in localValues"
       :key="index"
       class="field-accumulator__input-group"
     >
       <div
-        v-if="editableIndex === index || index === values.length - 1"
+        v-if="editableIndex === index || index === localValues.length - 1"
         class="field-accumulator__input-container"
       >
         <input
           :id="type + index"
-          v-model="values[index]"
+          v-model="localValues[index]"
           :type="inputType"
           :placeholder="placeholder"
           class="field-accumulator__input"
@@ -27,11 +27,11 @@
           @keydown.esc="restoreOriginalValue(index)"
         >
         <TickButton
-          v-if="index !== values.length - 1"
+          v-if="index !== localValues.length - 1"
           @confirm="confirmField(index)"
         />
         <CancelButton
-          v-if="index !== values.length - 1"
+          v-if="index !== localValues.length - 1"
           @cancel="restoreOriginalValue(index)"
         />
       </div>
@@ -42,7 +42,7 @@
         <span class="field-accumulator__value">{{ value }}</span>
         <EditButton @edit="toggleEdit(index)" />
         <RemoveButton
-          v-if="index !== values.length - 1 && values[index]"
+          v-if="index !== localValues.length - 1 && localValues[index]"
           @remove="deleteField(index)"
         />
       </div>
@@ -84,6 +84,7 @@ export default {
   },
   data() {
     return {
+      localValues: [...this.values],
       editableIndex: null,
       originalValue: ''
     };
@@ -99,23 +100,30 @@ export default {
       return this.type === 'email' ? 'Enter email' : 'Enter phone number';
     },
     canAddField() {
-      const lastValue = this.values[this.values.length - 1];
+      const lastValue = this.localValues[this.localValues.length - 1];
       return lastValue && this.isValidField(lastValue);
+    }
+  },
+  watch: {
+    values(newValues) {
+      this.localValues = [...newValues];
     }
   },
   methods: {
     addField() {
-      const lastValue = this.values[this.values.length - 1];
+      const lastValue = this.localValues[this.localValues.length - 1];
       if (lastValue && this.isValidField(lastValue)) {
-        this.values.push('');
-        this.editableIndex = this.values.length - 1;
+        this.localValues.push('');
+        this.editableIndex = this.localValues.length - 1;
+        this.$emit('update:values', this.localValues);
       }
     },
     deleteField(index) {
-      this.values.splice(index, 1);
+      this.localValues.splice(index, 1);
       if (this.editableIndex === index) {
         this.editableIndex = null;
       }
+      this.$emit('update:values', this.localValues);
     },
     toggleEdit(index) {
       if (this.editableIndex !== null) {
@@ -123,22 +131,24 @@ export default {
       }
       this.editableIndex = this.editableIndex === index ? null : index;
       if (this.editableIndex !== null) {
-        this.originalValue = this.values[index]; // Store the original value
+        this.originalValue = this.localValues[index]; // Store the original value
       }
     },
     confirmField(index) {
-      if (this.values[index].trim() === '' || !this.isValidField(this.values[index])) {
-        this.values[index] = this.originalValue; // Restore the original value
+      if (this.localValues[index].trim() === '' || !this.isValidField(this.localValues[index])) {
+        this.localValues[index] = this.originalValue; // Restore the original value
       }
       this.editableIndex = null;
+      this.$emit('update:values', this.localValues);
     },
     validateField(index) {
-      if (this.values[index].trim() === '' || !this.isValidField(this.values[index])) {
-        this.values[index] = this.originalValue; // Restore the original value
+      if (this.localValues[index].trim() === '' || !this.isValidField(this.localValues[index])) {
+        this.localValues[index] = this.originalValue; // Restore the original value
       }
+      this.$emit('update:values', this.localValues);
     },
     restoreOriginalValue(index) {
-      this.values[index] = this.originalValue; // Restore the original value
+      this.localValues[index] = this.originalValue; // Restore the original value
       this.editableIndex = null;
     },
     isValidField(value) {
