@@ -1,61 +1,61 @@
 <template>
-    <form
-      class="contact-list__form"
-      @submit.prevent="$emit('save')"
-    >
-      <div class="contact-list__form-group">
-        <label
-          for="firstname"
-          class="contact-list__label"
-        >First Name:</label>
-        <input
-          id="firstname"
-          v-model="newContact.firstname"
-          class="contact-list__input"
-          required
-        >
-      </div>
-      <div class="contact-list__form-group">
-        <label
-          for="lastname"
-          class="contact-list__label"
-        >Last Name:</label>
-        <input
-          id="lastname"
-          v-model="newContact.lastname"
-          class="contact-list__input"
-          required
-        >
-      </div>
-      <div class="contact-list__form-group">
-        <FieldAccumulator
-          type="email"
-          :values="newContact.email"
-        />
-      </div>
-      <div class="contact-list__form-group">
-        <FieldAccumulator
-          type="phone"
-          :values="newContact.phoneNumber"
-        />
-      </div>
-      <div class="contact-list__button-group">
-        <button
-          type="submit"
-          class="contact-list__save-button"
-        >
-          Save
-        </button>
-        <button
-          type="button"
-          class="contact-list__cancel-button"
-          @click="$emit('cancel')"
-        >
-          Cancel
-        </button>
-      </div>
-    </form>
-  </template>
+  <form
+    class="contact-list__form"
+    @submit.prevent="$emit('save')"
+  >
+    <div class="contact-list__form-group">
+      <label
+        for="firstname"
+        class="contact-list__label"
+      >First Name:</label>
+      <input
+        id="firstname"
+        v-model="newContact.firstname"
+        class="contact-list__input"
+        required
+      >
+    </div>
+    <div class="contact-list__form-group">
+      <label
+        for="lastname"
+        class="contact-list__label"
+      >Last Name:</label>
+      <input
+        id="lastname"
+        v-model="newContact.lastname"
+        class="contact-list__input"
+        required
+      >
+    </div>
+    <div class="contact-list__form-group">
+      <FieldAccumulator
+        type="email"
+        :values="newContact.email"
+      />
+    </div>
+    <div class="contact-list__form-group">
+      <FieldAccumulator
+        type="phone"
+        :values="newContact.phoneNumber"
+      />
+    </div>
+    <div class="contact-list__button-group">
+      <button
+        type="submit"
+        class="contact-list__save-button"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        class="contact-list__cancel-button"
+        @click="$emit('cancel')"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</template>
   
   <script>
   import FieldAccumulator from './FieldAccumulator.vue';

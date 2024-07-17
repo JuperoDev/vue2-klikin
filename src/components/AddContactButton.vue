@@ -1,11 +1,11 @@
 <template functional>
-    <button
-      class="contact-list__dialog-button"
-      @click="props.onClick"
-    >
-      Add New Contact
-    </button>
-  </template>
+  <button
+    class="contact-list__dialog-button"
+    @click="props.onClick"
+  >
+    Add New Contact
+  </button>
+</template>
   
   <script>
   export default {

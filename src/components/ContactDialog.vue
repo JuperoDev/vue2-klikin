@@ -1,23 +1,23 @@
 <template>
+  <div
+    class="contact-list__dialog-overlay"
+    @click="$emit('close')"
+  >
     <div
-      class="contact-list__dialog-overlay"
-      @click="$emit('close')"
+      class="contact-list__dialog"
+      @click.stop
     >
-      <div
-        class="contact-list__dialog"
-        @click.stop
-      >
-        <h2 class="contact-list__dialog-title">
-          Add New Contact
-        </h2>
-        <ContactForm
-          :new-contact="newContact"
-          @save="$emit('save')"
-          @cancel="$emit('close')"
-        />
-      </div>
+      <h2 class="contact-list__dialog-title">
+        Add New Contact
+      </h2>
+      <ContactForm
+        :new-contact="newContact"
+        @save="$emit('save')"
+        @cancel="$emit('close')"
+      />
     </div>
-  </template>
+  </div>
+</template>
   
   <script>
   import ContactForm from './ContactForm.vue';
