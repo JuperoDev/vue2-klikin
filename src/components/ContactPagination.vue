@@ -36,15 +36,14 @@
   };
   </script>
   
-  <style scoped>
-  .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0 20px;
-  }
-  
-  .pagination__button {
+  <style scoped lang="scss">
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 20px;
+
+  &__button {
     padding: 10px 20px;
     margin: 0 5px;
     border: none;
@@ -53,15 +52,16 @@
     color: white;
     cursor: pointer;
     font-size: 16px;
+
+    &:disabled {
+      background-color: #dddddd;
+      cursor: not-allowed;
+    }
   }
-  
-  .pagination__button:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
-  }
-  
-  .pagination__info {
+
+  &__info {
     font-size: 16px;
   }
-  </style>
+}
+</style>
   

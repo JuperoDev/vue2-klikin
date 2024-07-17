@@ -26,18 +26,17 @@
   };
   </script>
   
-  <style scoped>
+  <style scoped lang="scss">
   .edit-button {
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
-  }
   
-  .edit-icon {
-    width: 16px;
-    height: 16px;
-    color: #007bff;
+    &__icon {
+      width: 16px;
+      height: 16px;
+      color: #007bff;
+    }
   }
   </style>
-  

@@ -166,58 +166,74 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .field-accumulator {
   margin-bottom: 15px;
-}
 
-.field-accumulator__label {
-  display: block;
-  margin-bottom: 5px;
-}
+  &__label {
+    display: block;
+    margin-bottom: 5px;
+  }
 
-.field-accumulator__input-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-}
+  &__input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
 
-.field-accumulator__input-container {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
+  &__input-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
 
-.field-accumulator__input {
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  margin-right: 10px;
-}
+  &__input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-right: 10px;
+    transition: border-color 0.3s;
 
-.field-accumulator__value-group {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
+    &:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+  }
 
-.field-accumulator__value {
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  background-color: #f9f9f9;
-  color: #999;
-  margin-right: 10px;
-}
+  &__value-group {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
 
-.field-accumulator__add-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  padding: 5px 10px;
+  &__value {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    background-color: #f9f9f9;
+    color: #999;
+    margin-right: 10px;
+  }
+
+  &__add-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+
+    &:disabled {
+      background-color: #c0c0c0;
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {
+      background-color: #0056b3;
+    }
+  }
 }
 </style>

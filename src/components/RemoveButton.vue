@@ -22,18 +22,18 @@
   </button>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .remove-button {
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
   margin-left: 10px;
-}
 
-.remove-button__icon {
-  width: 16px;
-  height: 16px;
-  color: #dc3545;
+  &__icon {
+    width: 16px;
+    height: 16px;
+    color: #dc3545;
+  }
 }
 </style>

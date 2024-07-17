@@ -18,19 +18,18 @@
   </button>
 </template>
   
-  <style scoped>
-  .tick-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    margin-left: 10px;
-  }
-  
-  .tick-button__icon {
+<style scoped lang="scss">
+.tick-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 10px;
+
+  &__icon {
     width: 16px;
     height: 16px;
     color: #28a745;
   }
-  </style>
-  
+}
+</style>

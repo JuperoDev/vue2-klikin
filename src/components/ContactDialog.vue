@@ -36,7 +36,7 @@
   };
   </script>
   
-  <style scoped>
+  <style scoped lang="scss">
   .contact-list__dialog-overlay {
     position: fixed;
     top: 0;
@@ -51,7 +51,7 @@
   }
   
   .contact-list__dialog {
-    background-color: white;
+    background-color: #fff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -63,3 +63,4 @@
     margin-bottom: 20px;
   }
   </style>
+  

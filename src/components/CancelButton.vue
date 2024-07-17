@@ -29,19 +29,18 @@
   </button>
 </template>
   
-  <style scoped>
-  .cancel-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    margin-left: 10px;
-  }
-  
-  .cancel-button__icon {
+<style scoped lang="scss">
+.cancel-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 10px;
+
+  &__icon {
     width: 16px;
     height: 16px;
     color: #dc3545;
   }
-  </style>
-  
+}
+</style>

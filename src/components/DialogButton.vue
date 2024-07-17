@@ -138,91 +138,93 @@ export default {
   }
 };
 </script>
+<style scoped lang="scss">
+.contact-list {
+  &__dialog-button {
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 
-<style scoped>
-.contact-list__dialog-button {
-  margin-bottom: 20px;
-  padding: 10px 15px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
+    &:hover {
+      background-color: #218838;
+    }
+  }
 
-.contact-list__dialog-button:hover {
-  background-color: #218838;
-}
+  &__dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
 
-.contact-list__dialog-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
+  &__dialog {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    z-index: 1001;
+  }
 
-.contact-list__dialog {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  z-index: 1001;
-}
+  &__dialog-title {
+    margin-bottom: 20px;
+  }
 
-.contact-list__dialog-title {
-  margin-bottom: 20px;
-}
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
 
-.contact-list__form {
-  display: flex;
-  flex-direction: column;
-}
+  &__form-group {
+    margin-bottom: 15px;
+  }
 
-.contact-list__form-group {
-  margin-bottom: 15px;
-}
+  &__label {
+    display: block;
+    margin-bottom: 5px;
+  }
 
-.contact-list__label {
-  display: block;
-  margin-bottom: 5px;
-}
+  &__input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+  }
 
-.contact-list__input {
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-}
+  &__button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
 
-.contact-list__button-group {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
+  &__save-button,
+  &__cancel-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
 
-.contact-list__save-button, .contact-list__cancel-button {
-  padding: 5px 10px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
+  &__save-button {
+    background-color: #28a745;
+    color: white;
+  }
 
-.contact-list__save-button {
-  background-color: #28a745;
-  color: white;
-}
-
-.contact-list__cancel-button {
-  background-color: #dc3545;
-  color: white;
+  &__cancel-button {
+    background-color: #dc3545;
+    color: white;
+  }
 }
 </style>

@@ -120,33 +120,33 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .contact-list {
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-.contact-list__search-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
-}
+  &__search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
 
-.contact-list__search-input:focus {
-  border-color: #007bff;
-  outline: none;
+    &:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+  }
 }
 
 .no-results {
   text-align: center;
   font-size: 16px;
-  color: #888;
+  color: #888888;
   margin-top: 20px;
 }
 </style>
